@@ -1,5 +1,6 @@
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Player {
@@ -9,13 +10,14 @@ public class Player {
 	private long id;
 	@Length(max = 10)
 	private String name;
-
+    
+	@JsonCreator
 	public Player() {}
-
+    
+	@JsonCreator
 	public Player(long id, String name) {
 		this.name = name;// TODO check it not null
 		this.id = id;// TODO check if it right
-
 	}
 
 	@JsonProperty
