@@ -1,3 +1,4 @@
+package cg.solutions;
 import org.hibernate.validator.constraints.NotEmpty;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;

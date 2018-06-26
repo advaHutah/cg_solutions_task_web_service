@@ -1,3 +1,4 @@
+package cg.solutions;
 import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -5,10 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Player {
 
-	// public static int ID =0;
-
 	private long id;
-	@Length(max = 10)
 	private String name;
     
 	@JsonCreator
