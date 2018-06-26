@@ -34,7 +34,6 @@ public class SortedPlayerResource {
 		else
 			System.out.println("Error");
 		return null;
-
 	}
 
 	@POST
