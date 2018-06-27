@@ -1,4 +1,5 @@
 package cg.solutions;
+
 import java.util.Collection;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
@@ -17,31 +18,36 @@ import javax.ws.rs.core.MediaType;
 public class SortedPlayerResource {
 	private final String defaultName;
 	private final AtomicLong counter;
-	private PlayerManager manager ;
+	private PlayerManager manager;
 
 	public SortedPlayerResource(String defaultName) {
 		this.defaultName = defaultName;
 		this.counter = new AtomicLong();
 		this.manager = new PlayerManager();
-		
+
 	}
 
 	@GET
-	public Collection<Player> sortedPlayer(@QueryParam("sort") @NotNull SortOption sort) {		
-		if(sort.equals(SortOption.ID))
+	public Collection<Player> sortedPlayer(@QueryParam("sort") @NotNull SortOption sort) {
+		if (sort.equals(SortOption.ID))
 			return manager.getPlayerIdTS();
-		else if(sort.equals(SortOption.NAME))
+		else if (sort.equals(SortOption.NAME))
 			return manager.getPlayerNameTS();
 		return null;
 	}
 
 	@POST
 	@Path("/{name}")
-	public Player createNewPlayer(@PathParam("name") Optional<String> name) {
-		Player newPlayer = new Player(counter.incrementAndGet(), name.orElse(defaultName));
-		manager.addPlayer(newPlayer);
-		return newPlayer;
+	public Player createNewPlayer(@PathParam("name") Optional<String> name) throws Exception {
+		if (validateName(name.get())) {
+			Player newPlayer = new Player(counter.incrementAndGet(), name.orElse(defaultName));
+			manager.addPlayer(newPlayer);
+			return newPlayer;
+		}
+        throw new Exception("Something wrong : name contains letters only");		
+	}
+
+	public boolean validateName(String name) {
+		return name.matches("([a-zA-Z]+|[a-zA-Z]+\\s[a-zA-Z]+)" );
 	}
 }
-
-
